@@ -6,12 +6,12 @@ public class MyStack {
 	
 	public MyStack( int capacity ) {
 		top = -1;
-		resize( capacity );
+		buffer = new String[ capacity ];
 	}
 
 	public void push( String s ) {
 		if( top == buffer.length - 1 ) {  // stack is full
-			resize( buffer.length*2 );
+			resize();
 		}
 		buffer[ ++top ] = s;
 	}
@@ -21,20 +21,19 @@ public class MyStack {
 			throw new MyStackException( "stack is empty" );
 		}
 		
-		return buffer[ top-- ];
+		String result = buffer[ top ];
+		buffer[ top-- ] = null;
+		
+		return result;
 	}
 	
 	public boolean isEmpty() {
 		return top == -1;
 	}
 	
-	private void resize( int capacity ) {
-		if( capacity - 1 < top ) { // 현재 크기 보다 작게 리사이징 할 경우
-			top = capacity - 1;
-			return;
-		}
-
-		String[] temp = new String[ capacity ];
+	private void resize() {
+		int size = buffer.length;
+		String[] temp = new String[ size * 2 ];
 
 		for( int i = 0; i <= top; i++ ) {
 			temp[ i ] = buffer[ i ];
