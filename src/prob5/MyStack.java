@@ -22,7 +22,7 @@ public class MyStack {
 		}
 		
 		String result = buffer[ top ];
-		buffer[ top-- ] = null;
+		buffer[ top-- ] = null; // GC
 		
 		return result;
 	}
@@ -32,8 +32,7 @@ public class MyStack {
 	}
 	
 	private void resize() {
-		int size = buffer.length;
-		String[] temp = new String[ size * 2 ];
+		String[] temp = new String[ buffer.length * 2 ];
 
 		for( int i = 0; i <= top; i++ ) {
 			temp[ i ] = buffer[ i ];
