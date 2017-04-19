@@ -10,10 +10,10 @@ public class MyStack {
 	}
 
 	public void push( String s ) {
-		if( ++top == buffer.length ) {  // stack is full
+		if( top == buffer.length - 1 ) {  // stack is full
 			resize( buffer.length*2 );
 		}
-		buffer[ top ] = s;
+		buffer[ ++top ] = s;
 	}
 
 	public String pop() throws MyStackException {
@@ -29,10 +29,14 @@ public class MyStack {
 	}
 	
 	private void resize( int capacity ) {
+		if( capacity - 1 < top ) { // 현재 크기 보다 작게 리사이징 할 경우
+			top = capacity - 1;
+			return;
+		}
+
 		String[] temp = new String[ capacity ];
-		
-		int count = ( capacity > top ) ? top : capacity;
-		for( int i = 0; i < count; i++ ) {
+
+		for( int i = 0; i <= top; i++ ) {
 			temp[ i ] = buffer[ i ];
 		}
 		
